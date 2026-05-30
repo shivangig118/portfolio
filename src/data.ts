@@ -28,36 +28,44 @@ export const PROJECTS: Project[] = [
   {
     id: 'proj1',
     title: 'SummAIze',
-    description: 'An AI-powered document summarization tool designed to extract key insights from lengthy reports instantly.',
-    longDescription: 'SummAIze transforms massive PDFs and documents into precise, human-grade text summaries in seconds. Architected with robust server-side processing, caching strategies, and semantic layout parsing to maintain document hierarchy while mining essential insights and core deliverables.',
+    category: 'AI Product',
+    description:
+      'Turn long PDFs and reports into clear, structured summaries in seconds — with export to Markdown, PDF, or plain text.',
+    longDescription:
+      'SummAIze transforms massive PDFs and documents into precise, human-grade text summaries in seconds. Built with server-side processing, caching, and semantic layout parsing so document hierarchy is preserved while the model extracts what matters.',
     tags: ['React', 'Python', 'OpenAI API'],
     type: 'code',
+    highlights: ['Large-file support', 'Multiple summary styles', 'Markdown / PDF export'],
     codeSnippet: `import { AIService } from '@summaize/core';\n\nconst summary = await AIService.process(data);`,
     features: [
       'Semantic document structural parsing',
       'Intelligent core takeaway extraction via OpenAI models',
       'Configurable summaries (bulleted lists, executive summaries, short abstract)',
       'Export results directly into Markdown, PDF, or Plain Text format',
-      'Optimized server-side pagination for extremely large files'
+      'Optimized server-side pagination for extremely large files',
     ],
-    githubUrl: 'https://github.com/shivangig118/SummAIze'
+    githubUrl: 'https://github.com/shivangig118/SummAIze',
   },
   {
     id: 'proj2',
     title: 'DataDash',
-    description: 'Real-time analytics dashboard for monitoring microservice health.',
-    longDescription: 'DataDash supplies site reliability and SRE teams with live, high-resolution infrastructure telemetry metrics. It aggregates live log collections, maps cluster node dependency relationships, and provides microsecond-precise graphs reflecting CPU, memory, and database latencies.',
-    tags: ['Next.js', 'PostgreSQL'],
+    category: 'Observability',
+    description:
+      'Real-time analytics dashboard for microservice health — latency, errors, and infra metrics in one place.',
+    longDescription:
+      'DataDash gives SRE and platform teams live infrastructure telemetry: aggregated logs, service dependency maps, and precise charts for CPU, memory, and database latency — with alerting when thresholds are crossed.',
+    tags: ['Next.js', 'PostgreSQL', 'Node.js'],
     type: 'chart',
+    highlights: ['Sub-second queries', 'Slack & email alerts', 'Modular metric panels'],
     features: [
       'High-throughput time-series database architecture',
-      'Dynamic charts visualizing service latency, error frequencies, and network loads',
-      'Custom user-defined alerting thresholds via email and Slack webhooks',
-      'Configurable metrics view matching responsive modular card panels',
-      'Sub-second query latencies on historical system audit trails'
+      'Dynamic charts for service latency, error rates, and network load',
+      'Custom alerting thresholds via email and Slack webhooks',
+      'Responsive, configurable metric card layouts',
+      'Fast historical audit trails on system events',
     ],
-    githubUrl: 'https://github.com/shivangig118/DataDash'
-  }
+    githubUrl: 'https://github.com/shivangig118/DataDash',
+  },
 ];
 
 export const SKILLS: SkillGroup[] = [

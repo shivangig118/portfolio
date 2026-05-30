@@ -69,7 +69,7 @@ export default function App() {
 
         {/* Fully Printable CV Resume Modal */}
         {isResumeOpen && (
-          <ResumeModal onClose={() => setIsResumeOpen(false)} />
+          <ResumeModal key="resume" onClose={() => setIsResumeOpen(false)} />
         )}
 
         {/* Interactive Contacts Composer Modal */}

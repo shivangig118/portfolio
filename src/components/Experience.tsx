@@ -11,7 +11,6 @@ export default function Experience() {
         </h3>
 
         <div className="relative">
-          {}
           <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[2px] bg-gray-200 hidden md:block" />
 
           <div className="space-y-12 md:space-y-0 relative">
@@ -23,11 +22,7 @@ export default function Experience() {
                 <div key={exp.id} className="relative md:grid md:grid-cols-2 md:gap-8 items-center">
                   {/* Left Side Content for Even indexes (or spacer) */}
                   <div className={`md:flex ${isEven ? 'md:justify-end' : 'md:order-last'}`}>
-                    {isEven ? (
-            
-                      <div className="hidden md:block w-full" />
-                    ) : (
-                     
+                    {!isEven && (
                       <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -56,16 +51,14 @@ export default function Experience() {
                     )}
                   </div>
 
-                  {}
                   <div className="absolute left-0 md:left-1/2 top-6 md:top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 flex items-center justify-center z-10">
                     <div className="h-10 w-10 md:h-12 md:w-12 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center shadow-md animate-pulse-slow">
                       <Icon className="h-4 w-4 md:h-5 md:w-5" />
                     </div>
                   </div>
 
-                  {}
                   <div className={`ml-14 md:ml-0 md:flex ${isEven ? 'md:order-last' : 'md:justify-start'}`}>
-                    {isEven ? (
+                    {isEven && (
                       <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -91,9 +84,6 @@ export default function Experience() {
                           ))}
                         </ul>
                       </motion.div>
-                    ) : (
-
-                      <div className="hidden md:block w-full" />
                     )}
                   </div>
                 </div>

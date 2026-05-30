@@ -5,6 +5,8 @@ export interface Project {
   longDescription: string;
   tags: string[];
   type: 'code' | 'chart';
+  category: string;
+  highlights: string[];
   codeSnippet?: string;
   features: string[];
   githubUrl?: string;
