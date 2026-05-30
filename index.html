@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en" ng-app="portfolioApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shivangi Goyal | SDE Portfolio</title>
+    
+    <!-- Load AngularJS and Lucide CDN in the browser -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Connect local app stylesheet and script compiled by Vite -->
+    <link rel="stylesheet" href="/src/index.css" />
+    <script type="module" src="/src/app.ts"></script>
+  </head>
+  <body ng-controller="PortfolioController as ctrl" class="relative min-h-screen text-slate-900 bg-[#fafbfd] selection:bg-blue-100 selection:text-blue-800">
+    <!-- Embedded Floating Grid Background Elements -->
+    <div class="fixed inset-0 bg-grid opacity-75 pointer-events-none z-0"></div>
+
+    <!-- Main Structural Layout Content Wrapper -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+      
+      <!-- Navigation Bar -->
+      <header
+        id="main-header"
+        ng-class="{'bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm': ctrl.scrolled, 'bg-transparent': !ctrl.scrolled}"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16 sm:h-20">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+              <a href="#home" class="text-xl sm:text-2xl font-extrabold text-blue-600 tracking-tight transition-colors hover:text-blue-700">
+                Shivangi Goyal
+              </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+              <a
+                ng-repeat="link in ctrl.navLinks"
+                ng-href="{{link.href}}"
+                class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors py-2 relative group"
+              >
+                {{link.name}}
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="hidden md:block">
+              <button
+                ng-click="ctrl.openResume()"
+                id="header-resume-btn"
+                class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-sm font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all shadow-md hover:shadow-lg shadow-blue-500/10 cursor-pointer"
+              >
+                Resume
+              </button>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+              <button
+                ng-click="ctrl.toggleMobileMenu()"
+                id="mobile-menu-toggle"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-950 hover:bg-gray-100 focus:outline-none transition-colors"
+              >
+                <lucide-icon name="{{ctrl.mobileMenuOpen ? 'x' : 'menu'}}" class="h-6 w-6"></lucide-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Slider -->
+        <div ng-show="ctrl.mobileMenuOpen" class="md:hidden bg-white border-b border-gray-100 shadow-inner">
+          <div class="px-4 pt-2 pb-6 space-y-2">
+            <a
+              ng-repeat="link in ctrl.navLinks"
+              ng-href="{{link.href}}"
+              ng-click="ctrl.mobileMenuOpen = false"
+              class="block px-3 py-2.5 rounded-lg text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+            >
+              {{link.name}}
+            </a>
+            <div class="pt-4 border-t border-gray-100 px-3">
+              <button
+                ng-click="ctrl.mobileMenuOpen = false; ctrl.openResume()"
+                id="mobile-resume-btn"
+                class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition-all cursor-pointer"
+              >
+                Resume <lucide-icon name="arrow-up-right" class="ml-1.5 h-4 w-4"></lucide-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Layout Panels -->
+      <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden bg-grid">
+          <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-100/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+            <div class="max-w-4xl">
+              <!-- Badges row -->
+              <div class="flex flex-wrap gap-2.5 mb-6 sm:mb-8">
+                <div
+                  ng-repeat="badge in ctrl.badges"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-violet-50 border border-violet-100/50 text-violet-600 rounded-full text-xs font-semibold tracking-wide shadow-sm"
+                >
+                  <lucide-icon name="{{badge.icon}}" class="h-3.5 w-3.5 text-violet-500"></lucide-icon>
+                  {{badge.text}}
+                </div>
+              </div>
+
+              <!-- Main Title -->
+              <h1 class="text-5xl sm:text-6xl md:text-7.5xl font-black text-gray-900 tracking-tight leading-none mb-4 sm:mb-6">
+                Shivangi Goyal
+              </h1>
+
+              <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 tracking-tight leading-relaxed max-w-2xl mb-6">
+                Software Development Engineer | <span class="text-blue-600">AI-Driven Product Builder</span>
+              </h2>
+
+              <p class="text-base sm:text-lg text-gray-600 font-medium leading-relaxed max-w-3xl mb-8 sm:mb-10 text-pretty">
+                I build robust, scalable applications bridging full-stack development with innovative AI
+                integrations. Passionate about clean code, elegant architecture, and solving complex
+                problems.
+              </p>
+
+              <!-- CTA Actions Button Group -->
+              <div class="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#projects"
+                  id="hero-view-projects-btn"
+                  class="group inline-flex items-center justify-center px-6 py-3.5 border border-transparent text-base font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all shadow-lg hover:shadow-xl shadow-blue-600/15 cursor-pointer text-center"
+                >
+                  View Projects
+                  <lucide-icon name="arrow-right" class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"></lucide-icon>
+                </a>
+
+                <button
+                  ng-click="ctrl.openResume()"
+                  id="hero-download-resume-btn"
+                  class="inline-flex items-center justify-center px-6 py-3.5 border-2 border-blue-600 text-base font-bold rounded-xl text-blue-600 bg-white hover:bg-blue-50 active:scale-95 transition-all shadow-sm hover:shadow cursor-pointer text-center"
+                >
+                  Download Resume
+                  <lucide-icon name="download" class="ml-2 h-4 w-4"></lucide-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- About Column Block -->
+        <section id="about" class="py-16 sm:py-24 bg-transparent">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-md shadow-gray-100/30">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+                <!-- Left Content Column -->
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                  <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 tracking-tight mb-6">
+                    Who I Am
+                  </h3>
+                  <div class="space-y-4 text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+                    <p>
+                      I am a dedicated Software Development Engineer with a strong foundation in modern web
+                      technologies and a keen interest in artificial intelligence. My approach is rooted in
+                      architectural clarity and user-centric design, ensuring that every project I undertake
+                      not only functions flawlessly but provides a seamless experience.
+                    </p>
+                    <p>
+                      I thrive in environments that challenge me to learn and adapt, consistently seeking out
+                      new tools and methodologies to improve my craft.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Right Cards Column -->
+                <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4 justify-center">
+                  <!-- Card 1: AI Apps -->
+                  <div class="flex-1 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between transition-all hover:-translate-y-1 hover:scale-[1.01]">
+                    <div>
+                      <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-6">
+                        <lucide-icon name="bot" class="h-5 w-5 text-blue-600"></lucide-icon>
+                      </div>
+                      <h4 className="text-xl font-bold text-gray-950 mb-2">AI Apps</h4>
+                      <p class="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">
+                        Integrating intelligent models into practical applications.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Card 2: Enterprise Systems -->
+                  <div class="flex-1 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between transition-all hover:-translate-y-1 hover:scale-[1.01]">
+                    <div>
+                      <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-6">
+                        <lucide-icon name="network" class="h-5 w-5 text-blue-600"></lucide-icon>
+                      </div>
+                      <h4 class="text-xl font-bold text-gray-950 mb-2">Enterprise Systems</h4>
+                      <p class="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">
+                        Building scalable and robust backend architectures.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tech Stack Component -->
+        <section id="skills" class="py-16 sm:py-24 bg-transparent border-t border-b border-gray-100/40">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 text-center mb-16 tracking-tight">
+              Tech Stack
+            </h3>
+
+            <div class="space-y-6 sm:space-y-8">
+              <div
+                ng-repeat="group in ctrl.skills"
+                class="grid grid-cols-1 md:grid-cols-12 md:items-center gap-3 sm:gap-6 border-b border-gray-100/30 pb-6 sm:pb-8 last:border-b-0 last:pb-0"
+              >
+                <!-- Category Name -->
+                <div class="md:col-span-3">
+                  <span class="text-sm sm:text-base font-semibold text-gray-500 tracking-wide uppercase sm:normal-case">
+                    {{group.category}}
+                  </span>
+                </div>
+
+                <!-- Custom Chips -->
+                <div class="md:col-span-9 flex flex-wrap gap-2.5">
+                  <div
+                    ng-repeat="skill in group.skills"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-white border border-gray-100/50 rounded-xl text-xs sm:text-sm font-semibold text-gray-800 shadow-sm shadow-gray-100/20 hover:scale-105 hover:-translate-y-0.5 transition-all"
+                  >
+                    {{skill}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ExperienceTimeline -->
+        <section id="experience" class="py-16 sm:py-24 bg-transparent overflow-hidden">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 text-center mb-16 tracking-tight">
+              Experience & Exposure
+            </h3>
+
+            <div class="relative">
+              <!-- Central line for timeline -->
+              <div class="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[2px] bg-gray-200 hidden md:block"></div>
+
+              <div class="space-y-12 md:space-y-0 relative">
+                <div ng-repeat="exp in ctrl.experiences" class="relative md:grid md:grid-cols-2 md:gap-8 items-center">
+                  
+                  <!-- Left Side Element for Even indexes -->
+                  <div class="md:flex" ng-class="{'md:justify-end': $even, 'md:order-last': !$even}">
+                    <div ng-if="$odd" class="w-full md:max-w-md bg-white border border-gray-100/80 rounded-2xl p-6 shadow-sm shadow-gray-100/10 hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xl font-bold text-gray-950">{{exp.role}}</h4>
+                        <span class="text-xs sm:text-sm font-semibold text-gray-400">
+                          {{exp.duration}}
+                        </span>
+                      </div>
+                      <span class="inline-block text-sm font-bold text-blue-600 mb-4 h-5">
+                        {{exp.company}}
+                      </span>
+                      <ul class="space-y-2.5 text-sm sm:text-base text-gray-600 font-medium">
+                        <li ng-repeat="bullet in exp.bullets" class="flex gap-2.5 items-start">
+                          <span class="h-1.5 w-1.5 rounded-full bg-blue-600 mt-2 flex-shrink-0"></span>
+                          <span>{{bullet}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Spacer on left if even -->
+                    <div ng-if="$even" class="hidden md:block w-full"></div>
+                  </div>
+
+                  <!-- Central Node Dot -->
+                  <div class="absolute left-0 md:left-1/2 top-6 md:top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 flex items-center justify-center z-10">
+                    <div class="h-10 w-10 md:h-12 md:w-12 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center shadow-md">
+                      <lucide-icon name="{{exp.type === 'work' ? 'briefcase' : 'graduation-cap'}}" class="h-4 w-4 md:h-5 md:w-5"></lucide-icon>
+                    </div>
+                  </div>
+
+                  <!-- Right Side Element for Odd indexes -->
+                  <div class="ml-14 md:ml-0 md:flex" ng-class="{'md:order-last': $even, 'md:justify-start': !$even}">
+                    <div ng-if="$even" class="w-full md:max-w-md bg-white border border-gray-100/80 rounded-2xl p-6 shadow-sm shadow-gray-100/10 hover:shadow-md transition-shadow">
+                      <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xl font-bold text-gray-950">{{exp.role}}</h4>
+                        <span class="text-xs sm:text-sm font-semibold text-gray-400">
+                          {{exp.duration}}
+                        </span>
+                      </div>
+                      <span class="inline-block text-sm font-bold text-blue-600 mb-4 h-5">
+                        {{exp.company}}
+                      </span>
+                      <ul class="space-y-2.5 text-sm sm:text-base text-gray-600 font-medium">
+                        <li ng-repeat="bullet in exp.bullets" class="flex gap-2.5 items-start">
+                          <span class="h-1.5 w-1.5 rounded-full bg-blue-600 mt-2 flex-shrink-0"></span>
+                          <span>{{bullet}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Spacer on right if odd -->
+                    <div ng-if="$odd" class="hidden md:block w-full"></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Featured Projects List -->
+        <section id="projects" class="py-16 sm:py-24 bg-transparent">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 tracking-tight mb-16">
+              Featured Projects
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+              
+              <!-- Card 1: SummAIze -->
+              <div class="flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                <!-- Top custom code mockup -->
+                <div class="bg-[#1e1e24] p-6 relative font-mono text-xs sm:text-sm text-gray-300 min-h-[160px] flex flex-col justify-center border-b border-gray-800">
+                  <div class="absolute top-3.5 left-4 flex gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+                  </div>
+                  <div class="mt-4 leading-relaxed">
+                    <div>
+                      <span class="text-indigo-400">import</span> {'{'} <span class="text-cyan-300">AIService</span> {'}'} <span class="text-indigo-400">from</span> <span class="text-green-300">'@summaize/core'</span>;
+                    </div>
+                    <div class="mt-2.5">
+                      <span class="text-indigo-400">const</span> <span class="text-amber-300">summary</span> = <span class="text-indigo-300">await</span> <span class="text-cyan-300">AIService</span>.<span class="text-blue-300">process</span>(data);
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4 class="text-2xl font-extrabold text-gray-950 mb-3 tracking-tight">{{ctrl.projects[0].title}}</h4>
+                    <p class="text-gray-600 font-medium text-sm sm:text-base leading-relaxed mb-6">
+                      {{ctrl.projects[0].description}}
+                    </p>
+
+                    <!-- Badges -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                      <span
+                        ng-repeat="tag in ctrl.projects[0].tags"
+                        class="inline-flex items-center px-3 py-1 bg-violet-50/50 border border-violet-100/50 text-violet-600 rounded-lg text-xs font-semibold"
+                      >
+                        {{tag}}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Trigger CTA -->
+                  <button
+                    ng-click="ctrl.openProjectDetails(ctrl.projects[0])"
+                    id="proj-summaize-details"
+                    class="w-full inline-flex items-center justify-center py-3 px-4 border border-gray-100/80 hover:border-blue-600 hover:text-blue-600 text-sm font-bold rounded-xl text-gray-700 bg-white transition-all cursor-pointer shadow-sm hover:shadow active:scale-[0.99]"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card 2: DataDash -->
+              <div class="flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                <!-- Top mockup chart graphic -->
+                <div class="bg-violet-50/30 min-h-[160px] flex items-center justify-center border-b border-gray-100/30 relative">
+                  <div class="absolute top-3.5 left-4 flex gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-gray-200/50"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-gray-200/50"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-gray-200/50"></span>
+                  </div>
+                  <lucide-icon name="line-chart" class="h-16 w-16 text-blue-500 stroke-[1.2] drop-shadow-sm"></lucide-icon>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4 class="text-2xl font-extrabold text-gray-950 mb-3 tracking-tight">{{ctrl.projects[1].title}}</h4>
+                    <p class="text-gray-600 font-medium text-sm sm:text-base leading-relaxed mb-6">
+                      {{ctrl.projects[1].description}}
+                    </p>
+
+                    <!-- Tech Tags -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                      <span
+                        ng-repeat="tag in ctrl.projects[1].tags"
+                        class="inline-flex items-center px-3 py-1 bg-violet-50/50 border border-violet-100/50 text-violet-600 rounded-lg text-xs font-semibold"
+                      >
+                        {{tag}}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Trigger CTA -->
+                  <button
+                    ng-click="ctrl.openProjectDetails(ctrl.projects[1])"
+                    id="proj-datadash-details"
+                    class="w-full inline-flex items-center justify-center py-3 px-4 border border-gray-100/80 hover:border-blue-600 hover:text-blue-600 text-sm font-bold rounded-xl text-gray-700 bg-white transition-all cursor-pointer shadow-sm hover:shadow active:scale-[0.99]"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- What I'm Looking For section -->
+        <section class="py-16 sm:py-24 bg-transparent border-b border-gray-100/40">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-md shadow-gray-100/10">
+              <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 text-center mb-16 tracking-tight">
+                What I'm Looking For
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center md:divide-x md:divide-gray-100/60">
+                <!-- Roles Card -->
+                <div class="flex flex-col items-center px-4 sm:px-6 first:pl-0">
+                  <div class="h-12 w-12 rounded-full bg-blue-50 border border-blue-100/40 flex items-center justify-center mb-6">
+                    <lucide-icon name="users" class="h-5 w-5 text-blue-600"></lucide-icon>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-950 mb-3 tracking-tight">Roles</h4>
+                  <p class="text-sm sm:text-base text-gray-600 font-semibold leading-relaxed max-w-xs text-pretty">
+                    Software Development Engineer, Full Stack Developer, AI Integration Engineer.
+                  </p>
+                </div>
+
+                <!-- Interests Card -->
+                <div class="flex flex-col items-center px-4 sm:px-6">
+                  <div class="h-12 w-12 rounded-full bg-blue-50 border border-blue-100/40 flex items-center justify-center mb-6">
+                    <lucide-icon name="target" class="h-5 w-5 text-blue-600"></lucide-icon>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-950 mb-3 tracking-tight">Interests</h4>
+                  <p class="text-sm sm:text-base text-gray-600 font-semibold leading-relaxed max-w-xs text-pretty">
+                    Building scalable systems, exploring GenAI applications, clean architecture.
+                  </p>
+                </div>
+
+                <!-- What I Bring Card -->
+                <div class="flex flex-col items-center px-4 sm:px-6 last:pr-0">
+                  <div class="h-12 w-12 rounded-full bg-blue-50 border border-blue-100/40 flex items-center justify-center mb-6">
+                    <lucide-icon name="shield-check" class="h-5 w-5 text-blue-600"></lucide-icon>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-950 mb-3 tracking-tight">What I Bring</h4>
+                  <p class="text-sm sm:text-base text-gray-600 font-semibold leading-relaxed max-w-xs text-pretty">
+                    Strong analytical skills, adaptable learning mindset, focus on high-quality delivery.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick Connection Form Call Actions -->
+        <section id="contact" class="py-16 sm:py-24 bg-transparent">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-md shadow-gray-100/10 max-w-3xl mx-auto text-center">
+              <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-950 mb-4 tracking-tight">
+                Let's connect
+              </h3>
+
+              <p class="text-base sm:text-lg text-gray-600 font-medium leading-relaxed max-w-xl mx-auto mb-8 text-pretty">
+                I'm currently open to new opportunities. Whether you have a question or just want to say
+                hi, I'll try my best to get back to you!
+              </p>
+
+              <div class="flex flex-wrap justify-center gap-4">
+                <!-- Direct Email button trigger modal -->
+                <button
+                  ng-click="ctrl.openEmailForm()"
+                  id="contact-email-me-btn"
+                  class="inline-flex items-center gap-2 px-6 py-3 border border-transparent text-sm sm:text-base font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all shadow-md hover:shadow-lg shadow-blue-500/10 cursor-pointer"
+                >
+                  <lucide-icon name="mail" class="h-4.5 w-4.5"></lucide-icon>
+                  Email Me
+                </button>
+
+                <!-- LinkedIn connection -->
+                <a
+                  href="https://www.linkedin.com/in/shivangi-goyal-46817a222"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="contact-linkedin-btn"
+                  class="inline-flex items-center gap-2 px-6 py-3 border border-gray-100/80 hover:border-blue-600 hover:text-blue-600 text-sm sm:text-base font-bold rounded-xl text-gray-700 bg-white hover:bg-slate-50 active:scale-95 transition-all shadow-sm cursor-pointer"
+                >
+                  <lucide-icon name="linkedin" class="h-4.5 w-4.5 text-gray-500 hover:text-blue-600"></lucide-icon>
+                  LinkedIn
+                </a>
+
+                <!-- GitHub connection -->
+                <a
+                  href="https://github.com/shivangig118"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="contact-github-btn"
+                  class="inline-flex items-center gap-2 px-6 py-3 border border-gray-100/80 hover:border-blue-600 hover:text-blue-600 text-sm sm:text-base font-bold rounded-xl text-gray-700 bg-white hover:bg-slate-50 active:scale-95 transition-all shadow-sm cursor-pointer"
+                >
+                  <lucide-icon name="github" class="h-4.5 w-4.5 text-gray-500 hover:text-blue-600"></lucide-icon>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+     
+      <footer class="py-12 sm:py-16 border-t border-gray-100 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+        
+          <p class="text-xs sm:text-sm text-gray-400 font-semibold tracking-wide">
+            2026 Shivangi Goyal
+          </p>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Modals Section Overlay -->
+
+    <!-- Case Study Modal -->
+    <div ng-show="ctrl.isProjectModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <!-- Backdrop -->
+      <div ng-click="ctrl.closeProjectDetails()" class="absolute inset-0 bg-gray-950/45 backdrop-blur-xs"></div>
+
+      <!-- Content Drawer Box -->
+      <div class="relative bg-white border border-gray-100 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col z-10 transition-all">
+        
+        <!-- Modal Toolbar Header -->
+        <div class="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 flex-shrink-0">
+          <div>
+            <span class="text-xs font-bold text-blue-600 tracking-wider uppercase mb-1 block">Project Case Study</span>
+            <h4 class="text-2xl font-extrabold text-gray-950 tracking-tight">{{ctrl.selectedProject.title}}</h4>
+          </div>
+          <button
+            ng-click="ctrl.closeProjectDetails()"
+            id="close-project-modal"
+            class="p-1 px-2.5 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-500 hover:text-gray-920 rounded-xl transition-colors cursor-pointer animate-pulse-slow"
+          >
+            <lucide-icon name="x" class="h-5 w-5"></lucide-icon>
+          </button>
+        </div>
+
+        <!-- Scrollable Modal View body -->
+        <div class="flex-grow overflow-y-auto p-6 space-y-6">
+          
+          <div class="space-y-6">
+            <!-- Long Description -->
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block">Overview</span>
+              <p class="text-base text-gray-600 font-medium leading-relaxed">{{ctrl.selectedProject.longDescription}}</p>
+            </div>
+
+            <!-- Code snippet display -->
+            <div ng-if="ctrl.selectedProject.codeSnippet" class="space-y-2">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block">Core Implementation Module</span>
+              <div class="bg-[#1e1e24] p-5 rounded-xl font-mono text-xs sm:text-sm text-gray-300 leading-relaxed overflow-x-auto shadow-inner">
+                <pre>{{ctrl.selectedProject.codeSnippet}}</pre>
+              </div>
+            </div>
+
+            <!-- Key Features deliverables list -->
+            <div class="space-y-3">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block">Key Engineering Deliverables</span>
+              <div class="space-y-2.5">
+                <div ng-repeat="feat in ctrl.selectedProject.features" class="flex gap-3 items-start">
+                  <lucide-icon name="check-circle" class="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5"></lucide-icon>
+                  <span class="text-gray-700 text-sm sm:text-base font-semibold">{{feat}}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech badges -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span ng-repeat="tag in ctrl.selectedProject.tags" class="px-3.5 py-1.5 bg-gray-50 text-gray-600 border border-gray-100 rounded-xl text-xs font-bold shadow-xs">
+                {{tag}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Creatively added GitHub Button area in the sticky modal footer -->
+        <div class="px-6 py-4.5 bg-slate-50 border-t border-gray-100 flex flex-col sm:flex-row gap-3 sm:items-center justify-between flex-shrink-0">
+          <div class="text-xs font-medium text-gray-400">
+            Explore the codebase and star the repository on GitHub.
+          </div>
+          <a
+            ng-if="ctrl.selectedProject.githubUrl"
+            ng-href="{{ctrl.selectedProject.githubUrl}}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2.5 px-5 py-3 text-sm font-bold text-white bg-slate-900 hover:bg-black rounded-xl transition-all shadow-md shadow-slate-900/10 cursor-pointer active:scale-95"
+          >
+            <lucide-icon name="github" class="h-4.5 w-4.5"></lucide-icon>
+            <span>Explore Source Code</span>
+            <lucide-icon name="external-link" class="h-3.5 w-3.5 opacity-60"></lucide-icon>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Curriculum Vitae (Printable Resume Modal) -->
+    <div ng-show="ctrl.isResumeModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <!-- Backdrop -->
+      <div ng-click="ctrl.closeResume()" class="absolute inset-0 bg-gray-950/45 backdrop-blur-xs no-print"></div>
+
+      <!-- CV Document Box panel -->
+      <div class="relative bg-white border border-gray-100 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-hidden flex flex-col z-10 print-modal-full">
+        <!-- Control Bar -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0 no-print bg-slate-50/50">
+          <div class="flex items-center gap-2">
+            <lucide-icon name="file-text" class="h-5 w-5 text-blue-600"></lucide-icon>
+            <h4 class="text-lg font-bold text-gray-950 tracking-tight">Curriculum Vitae</h4>
+          </div>
+
+          <!-- Printable functions buttons -->
+          <div class="flex items-center gap-2">
+            <button
+              ng-click="ctrl.printResume()"
+              id="print-resume-btn"
+              class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-sm font-bold rounded-lg text-white shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer"
+            >
+              <lucide-icon name="printer" class="h-4 w-4"></lucide-icon>
+              Download / Print PDF
+            </button>
+            <button
+              ng-click="ctrl.closeResume()"
+              id="close-resume-modal"
+              class="p-2 hover:bg-gray-100 border border-transparent hover:border-gray-100 text-gray-500 hover:text-gray-800 rounded-lg transition-colors cursor-pointer"
+            >
+              <lucide-icon name="x" class="h-5 w-5"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Curriculum Vitae Sheet contents -->
+        <div class="flex-1 overflow-y-auto p-8 sm:p-12 space-y-8 print:p-0 bg-white">
+          
+          <!-- CV Header panel -->
+          <div class="border-b-2 border-slate-100 pb-6 text-center sm:text-left flex flex-col sm:flex-row justify-between items-start gap-4">
+            <div>
+              <h1 class="text-3xl sm:text-4.5xl font-black text-slate-900 tracking-tight leading-none">
+                Shivangi Goyal
+              </h1>
+              <p class="text-base sm:text-lg font-bold text-blue-600 tracking-wide mt-2">
+                Software Development Engineer | AI-Driven Product Builder
+              </p>
+            </div>
+
+            <!-- Headers contact points list -->
+            <div class="space-y-1.5 text-xs sm:text-sm font-semibold text-gray-500 w-full sm:w-auto text-left sm:text-right">
+              <div class="flex items-center sm:justify-end gap-2">
+                <lucide-icon name="mail" class="h-4 w-4 text-gray-400"></lucide-icon>
+                <span>shivangigoyal1108@gmail.com</span>
+              </div>
+              <div class="flex items-center sm:justify-end gap-2">
+                <lucide-icon name="map-pin" class="h-4 w-4 text-gray-400"></lucide-icon>
+                <span>Bangalore, Karnataka, India</span>
+              </div>
+              <div class="flex items-center sm:justify-end gap-2 text-blue-600">
+                <lucide-icon name="globe" class="h-4 w-4 text-blue-400"></lucide-icon>
+                <span>linkedin.com/in/shivangi-goyal-46817a222</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bullet summary row -->
+          <div class="space-y-2.5">
+            <h3 class="text-sm font-bold text-blue-600 tracking-widest uppercase border-b border-gray-100 pb-1.5">
+              Professional Summary
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">
+              Highly motivated and architectural-minded Software Development Engineer with robust
+              skills spanning the complete web app compilation, microservices optimization, and AI
+              pipeline integration ecosystem. Adept at driving software modularity, clean standards compliance, and sub-second analytical latencies.
+            </p>
+          </div>
+
+          <!-- Professional experience -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold text-blue-600 tracking-widest uppercase border-b border-gray-100 pb-1.5">
+              Professional Experience
+            </h3>
+            <div class="space-y-4">
+              <div ng-repeat="exp in ctrl.experiences" class="space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <h4 class="text-base font-bold text-slate-800">
+                    {{exp.role}} — <span class="text-blue-600">{{exp.company}}</span>
+                  </h4>
+                  <span class="text-xs font-bold text-gray-400">{{exp.duration}}</span>
+                </div>
+                <ul class="list-disc pl-5 space-y-1 text-xs text-gray-600 font-medium">
+                  <li ng-repeat="bullet in exp.bullets" class="leading-relaxed">
+                    {{bullet}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills block matrix -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold text-blue-600 tracking-widest uppercase border-b border-gray-100 pb-1.5">
+              Technical Skill Matrix
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div ng-repeat="grp in ctrl.skills" class="text-xs font-semibold">
+                <span class="text-slate-500 uppercase tracking-wider block mb-1">
+                  {{grp.category}}
+                </span>
+                <p class="text-slate-800 leading-relaxed font-semibold">
+                  {{grp.skills.join(', ')}}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Projects list inside CV summary -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold text-blue-600 tracking-widest uppercase border-b border-gray-100 pb-1.5">
+              Key Academic / Personal Engineering Projects
+            </h3>
+            <div class="space-y-4">
+              <div ng-repeat="p in ctrl.projects" class="space-y-1">
+                <div class="flex justify-between items-center">
+                  <h4 class="text-base font-bold text-slate-800">{{p.title}}</h4>
+                  <span class="text-xs font-bold text-gray-400">{{p.tags.join(' | ')}}</span>
+                </div>
+                <p class="text-xs text-gray-600 leading-relaxed font-medium">
+                  {{p.longDescription}}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic background info -->
+          <div class="space-y-2.5">
+            <h3 class="text-sm font-bold text-blue-600 tracking-widest uppercase border-b border-gray-100 pb-1.5">
+              Education
+            </h3>
+            <div class="space-y-1">
+              <div class="flex justify-between items-center">
+                <h4 class="text-sm font-bold text-slate-800">
+                  Bachelor of Technology (B.Tech) in Computer Science & Engineering
+                </h4>
+                <span class="text-xs font-bold text-gray-400">Class of 2023</span>
+              </div>
+              <p class="text-xs text-slate-500 font-semibold">First Class with Distinction</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Printing CSS sheets override settings -->
+      <style>
+        @media print {
+          body, html {
+            background: white !important;
+            color: black !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          .no-print {
+            display: none !important;
+          }
+          .print-modal-full {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: visible !important;
+          }
+          #root {
+            display: none !important;
+          }
+          body > div:last-child {
+            z-index: 999999 !important;
+            position: absolute !important;
+            background: white !important;
+          }
+        }
+      </style>
+    </div>
+
+    <!-- Direct Email Connection Modal Form -->
+    <div ng-show="ctrl.isEmailFormOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <!-- Backdrop -->
+      <div ng-click="ctrl.closeEmailForm()" class="absolute inset-0 bg-gray-950/45 backdrop-blur-xs"></div>
+
+      <!-- Form drawer body -->
+      <div class="relative bg-white border border-gray-100 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col z-10">
+        
+        <!-- Modal Toolbar Header -->
+        <div class="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 bg-slate-50/50">
+          <div class="flex items-center gap-1.5">
+            <lucide-icon name="send" class="h-4.5 w-4.5 text-blue-600"></lucide-icon>
+            <h4 class="text-lg font-bold text-gray-950 tracking-tight">Direct Connection</h4>
+          </div>
+          <button
+            ng-click="ctrl.closeEmailForm()"
+            id="close-email-form"
+            class="p-1 px-2.5 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-500 hover:text-gray-850 rounded-xl transition-colors cursor-pointer"
+          >
+            <lucide-icon name="x" class="h-5 w-5"></lucide-icon>
+          </button>
+        </div>
+
+        <!-- Forms section body -->
+        <div class="p-6 sm:p-8">
+          
+          <!-- State 1: Writing and editing message draft -->
+          <form ng-show="!ctrl.emailIsSuccess" ng-submit="ctrl.submitEmailForm()" class="space-y-4">
+            
+            <!-- User full name -->
+            <div>
+              <label class="text-xs font-bold text-gray-500 tracking-wider uppercase block mb-1.5">Full Name</label>
+              <input
+                type="text"
+                ng-model="ctrl.emailForm.name"
+                placeholder="e.g. Rachel Green"
+                ng-class="{'border-red-400 focus:border-red-400': ctrl.emailErrors.name, 'border-gray-100': !ctrl.emailErrors.name}"
+                class="w-full px-4 py-3 border rounded-xl text-sm font-semibold text-gray-800 bg-slate-50/30 focus:outline-none focus:border-blue-600 transition-colors"
+              />
+              <span ng-show="ctrl.emailErrors.name" class="text-red-500 text-xs font-bold mt-1 block">{{ctrl.emailErrors.name}}</span>
+            </div>
+
+            <!-- User Email connection -->
+            <div>
+              <label class="text-xs font-bold text-gray-500 tracking-wider uppercase block mb-1.5">Your corporate / personal email</label>
+              <input
+                type="email"
+                ng-model="ctrl.emailForm.email"
+                placeholder="rachel@comp.com"
+                ng-class="{'border-red-400 focus:border-red-400': ctrl.emailErrors.email, 'border-gray-100': !ctrl.emailErrors.email}"
+                class="w-full px-4 py-3 border rounded-xl text-sm font-semibold text-gray-800 bg-slate-50/30 focus:outline-none focus:border-blue-600 transition-colors"
+              />
+              <span ng-show="ctrl.emailErrors.email" class="text-red-500 text-xs font-bold mt-1 block">{{ctrl.emailErrors.email}}</span>
+            </div>
+
+            <!-- Subject Title -->
+            <div>
+              <label class="text-xs font-bold text-gray-500 tracking-wider uppercase block mb-1.5">Subject Line</label>
+              <input
+                type="text"
+                ng-model="ctrl.emailForm.subject"
+                placeholder="Opportunistic collaborations / Quick greeting"
+                class="w-full px-4 py-3 border border-gray-100 rounded-xl text-sm font-semibold text-gray-800 bg-slate-50/30 focus:outline-none focus:border-blue-600 transition-colors"
+              />
+            </div>
+
+            <!-- Text draft area content -->
+            <div>
+              <label class="text-xs font-bold text-gray-500 tracking-wider uppercase block mb-1.5">Message Body</label>
+              <textarea
+                ng-model="ctrl.emailForm.message"
+                placeholder="Hi Shivangi! Loved your portfolio. Lets assemble..."
+                ng-class="{'border-red-400 focus:border-red-400': ctrl.emailErrors.message, 'border-gray-100': !ctrl.emailErrors.message}"
+                class="w-full h-28 px-4 py-3 border rounded-xl text-sm font-semibold text-gray-800 bg-slate-50/30 focus:outline-none focus:border-blue-600 transition-colors"
+              ></textarea>
+              <span ng-show="ctrl.emailErrors.message" class="text-red-500 text-xs font-bold mt-1 block">{{ctrl.emailErrors.message}}</span>
+            </div>
+
+            <!-- Submit CTA -->
+            <button
+              type="submit"
+              ng-disabled="ctrl.emailIsSubmitting"
+              id="submit-message-btn"
+              class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 border border-transparent shadow-md text-sm font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 disabled:text-gray-400 transition-colors active:scale-[0.99] cursor-pointer"
+            >
+              <div ng-show="ctrl.emailIsSubmitting" class="inline-flex items-center gap-2">
+                <lucide-icon name="refresh-cw" class="h-4 w-4 animate-spin"></lucide-icon> Dispatching...
+              </div>
+              <div ng-show="!ctrl.emailIsSubmitting" class="inline-flex items-center gap-2">
+                Send message <lucide-icon name="chevron-right" class="h-4 w-4"></lucide-icon>
+              </div>
+            </button>
+
+          </form>
+
+          <!-- State 2: Successful mail dispatch indicator -->
+          <div ng-show="ctrl.emailIsSuccess" class="py-12 text-center space-y-5">
+            <div class="flex justify-center">
+              <lucide-icon name="check-circle-2" class="h-16 w-16 text-green-500 stroke-[1.5]"></lucide-icon>
+            </div>
+            <div class="space-y-2">
+              <h5 class="text-2xl font-black text-slate-800 tracking-tight">Message Dispatched!</h5>
+              <p class="text-sm text-gray-500 font-semibold max-w-sm mx-auto leading-relaxed">
+                Your email message has been forwarded to <strong>shivangigoyal1108@gmail.com</strong> successfully. She will get back to you soon!
+              </p>
+            </div>
+
+            <div class="pt-4">
+              <button
+                ng-click="ctrl.closeEmailForm()"
+                class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200/80 hover:text-gray-800 text-sm font-bold text-gray-600 rounded-xl transition-all cursor-pointer"
+              >
+                Close Window
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
