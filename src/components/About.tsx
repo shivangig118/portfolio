@@ -13,7 +13,7 @@ export default function About() {
           className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-md shadow-gray-100/30"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-            {/* Left Content Column */}
+            {}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-950 tracking-tight mb-6">
                 Who I Am
@@ -32,9 +32,9 @@ export default function About() {
               </div>
             </div>
 
-            {/* Right Card Column */}
+            {}
             <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4 justify-center">
-              {/* Card 1: AI Apps */}
+              {}
               <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
                 className="flex-1 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between transition-all"
@@ -50,7 +50,7 @@ export default function About() {
                 </div>
               </motion.div>
 
-              {/* Card 2: Enterprise Systems */}
+              {}
               <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
                 className="flex-1 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-between transition-all"

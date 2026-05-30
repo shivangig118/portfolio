@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { X, Printer, Download, Mail, Phone, MapPin, Globe, Award, FileText } from 'lucide-react';
 import { EXPERIENCES, PROJECTS, SKILLS } from '../data';
 import { motion } from 'motion/react';
@@ -7,8 +8,160 @@ interface ResumeModalProps {
 }
 
 export default function ResumeModal({ onClose }: ResumeModalProps) {
+  const printRef = useRef<HTMLDivElement | null>(null);
+
   const handlePrint = () => {
-    window.print();
+    if (!printRef.current) return;
+
+    const contentDiv = printRef.current.querySelector('.flex-1.overflow-y-auto');
+    if (!contentDiv) return;
+
+    // Clone and clean the content - remove all Tailwind classes
+    const cleanClone = contentDiv.cloneNode(true) as HTMLElement;
+    
+    // Remove all class attributes to strip Tailwind
+    const allElements = cleanClone.querySelectorAll('*');
+    allElements.forEach((el) => {
+      el.removeAttribute('class');
+    });
+
+    const printContent = cleanClone.innerHTML;
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to print the resume');
+      return;
+    }
+
+    const styles = `
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        @page {
+          size: A4 portrait;
+          margin: 15mm;
+        }
+        
+        html, body {
+          background: white;
+          color: #1a202c;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          line-height: 1.5;
+          width: 100%;
+        }
+        
+        body {
+          padding: 0;
+          margin: 0;
+          overflow: visible;
+        }
+        
+        /* Prevent content from splitting across pages unnecessarily */
+        div {
+          page-break-inside: avoid;
+        }
+        
+        h1 {
+          font-size: 2rem;
+          font-weight: 900;
+          color: #0f172a;
+          margin-bottom: 0.5rem;
+          page-break-after: avoid;
+        }
+        
+        h3 {
+          font-size: 0.875rem;
+          font-weight: 700;
+          color: #2563eb;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          border-bottom: 1px solid #d1d5db;
+          padding-bottom: 0.5rem;
+          margin-top: 1.5rem;
+          margin-bottom: 0.75rem;
+          page-break-after: avoid;
+        }
+        
+        h4 {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #1a202c;
+          page-break-after: avoid;
+        }
+        
+        p {
+          font-size: 0.875rem;
+          color: #4b5563;
+          margin: 0.25rem 0;
+          line-height: 1.5;
+        }
+        
+        li {
+          font-size: 0.75rem;
+          color: #4b5563;
+          margin: 0.25rem 0 0.25rem 1.25rem;
+          line-height: 1.5;
+        }
+        
+        ul {
+          margin: 0.5rem 0;
+          padding: 0;
+          list-style: disc;
+        }
+        
+        /* Contact info styling */
+        span {
+          color: inherit;
+          display: inline;
+        }
+        
+        /* Prevent SVGs from appearing */
+        svg {
+          display: none !important;
+        }
+        
+        /* Ensure proper section breaks */
+        @media print {
+          body {
+            background: white;
+          }
+          div[class*="space"] {
+            margin: 0 !important;
+          }
+          h3 {
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+          }
+        }
+      </style>
+    `;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Resume - Shivangi Goyal</title>
+          ${styles}
+        </head>
+        <body>
+          ${printContent}
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+
+    setTimeout(() => {
+      printWindow.print();
+      setTimeout(() => printWindow.close(), 500);
+    }, 250);
   };
 
   return (
@@ -29,6 +182,7 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
         transition={{ type: 'spring', damping: 25, stiffness: 350 }}
         className="relative bg-white border border-gray-100 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-hidden flex flex-col z-10 print-modal-full"
+        ref={printRef}
       >
         {/* Top Control Bar (Hidden on print) */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0 no-print bg-slate-50/50">
@@ -172,7 +326,7 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
                 <h4 className="text-sm font-bold text-slate-800">
                   Bachelor of Technology (B.Tech) in Computer Science & Engineering
                 </h4>
-                <span className="text-xs font-bold text-gray-400">Class of 2023</span>
+                <span className="text-xs font-bold text-gray-400">Class of 2025</span>
               </div>
               <p className="text-xs text-slate-500 font-semibold">First Class with Distinction</p>
             </div>

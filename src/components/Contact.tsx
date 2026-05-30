@@ -36,7 +36,7 @@ export default function Contact({ onOpenEmailForm }: ContactProps) {
               Email Me
             </button>
 
-            {/* LinkedIn button */}
+            {}
             <a
               href="https://www.linkedin.com/in/shivangi-goyal-46817a222"
               target="_blank"
@@ -48,7 +48,7 @@ export default function Contact({ onOpenEmailForm }: ContactProps) {
               LinkedIn
             </a>
 
-            {/* GitHub button */}
+            {}
             <a
               href="https://github.com/shivangig118"
               target="_blank"

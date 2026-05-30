@@ -44,7 +44,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </button>
         </div>
 
-        {/* Scrollable View body */}
+        {}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="space-y-6">
             {/* Product Long Description */}
@@ -53,7 +53,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <p className="text-base text-gray-600 font-medium leading-relaxed">{project.longDescription}</p>
             </div>
 
-            {/* Mock code block */}
+            {}
             {project.codeSnippet && (
               <div className="space-y-2">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Core Implementation Module</span>
@@ -63,7 +63,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             )}
 
-            {/* Core Features list */}
+            {}
             <div className="space-y-3">
               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Key Engineering Deliverables</span>
               <div className="space-y-2.5">

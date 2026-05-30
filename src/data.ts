@@ -3,7 +3,7 @@ import { Project, ExperienceItem, SkillGroup } from './types';
 export const EXPERIENCES: ExperienceItem[] = [
   {
     id: 'exp1',
-    role: 'Software Engineer',
+    role: 'Software Trainee',
     company: 'Qyrus',
     duration: 'August 2025 - Present',
     bullets: [

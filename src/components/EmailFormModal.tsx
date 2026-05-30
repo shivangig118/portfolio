@@ -61,7 +61,7 @@ export default function EmailFormModal({ onClose }: EmailFormModalProps) {
         transition={{ type: 'spring', damping: 25, stiffness: 350 }}
         className="relative bg-white border border-gray-100 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col z-10"
       >
-        {/* Header toolbar */}
+        {}
         <div className="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 bg-slate-50/50">
           <div className="flex items-center gap-1.5">
             <Send className="h-4.5 w-4.5 text-blue-600" />
@@ -76,7 +76,7 @@ export default function EmailFormModal({ onClose }: EmailFormModalProps) {
           </button>
         </div>
 
-        {/* Content body */}
+        {}
         <div className="p-6 sm:p-8">
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -140,7 +140,7 @@ export default function EmailFormModal({ onClose }: EmailFormModalProps) {
                 {errors.message && <span className="text-red-500 text-xs font-bold mt-1 block">{errors.message}</span>}
               </div>
 
-              {/* Action Button */}
+              {}
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -159,7 +159,6 @@ export default function EmailFormModal({ onClose }: EmailFormModalProps) {
               </button>
             </form>
           ) : (
-            /* Successful sending state */
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

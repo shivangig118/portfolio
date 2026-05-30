@@ -59,7 +59,7 @@ export default function Header({ onOpenResume }: HeaderProps) {
             ))}
           </nav>
 
-          {/* Action Button */}
+          {}
           <div className="hidden md:block">
             <button
               onClick={onOpenResume}
@@ -70,7 +70,7 @@ export default function Header({ onOpenResume }: HeaderProps) {
             </button>
           </div>
 
-          {/* Mobile menu button */}
+          {}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -83,7 +83,7 @@ export default function Header({ onOpenResume }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Menu Slide-Over */}
+      {}
       <AnimatePresence>
         {isOpen && (
           <motion.div

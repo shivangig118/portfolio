@@ -11,7 +11,7 @@ export default function Experience() {
         </h3>
 
         <div className="relative">
-          {/* Central Line for timeline (Large Screens Only) */}
+          {}
           <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[2px] bg-gray-200 hidden md:block" />
 
           <div className="space-y-12 md:space-y-0 relative">
@@ -24,10 +24,10 @@ export default function Experience() {
                   {/* Left Side Content for Even indexes (or spacer) */}
                   <div className={`md:flex ${isEven ? 'md:justify-end' : 'md:order-last'}`}>
                     {isEven ? (
-                      /* If even, card is on right, so we display a blank spacer on the left column */
+            
                       <div className="hidden md:block w-full" />
                     ) : (
-                      /* If odd, display card on Left column */
+                     
                       <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -56,17 +56,16 @@ export default function Experience() {
                     )}
                   </div>
 
-                  {/* Icon Node on Timeline Center Line */}
+                  {}
                   <div className="absolute left-0 md:left-1/2 top-6 md:top-1/2 transform -translate-y-1/2 md:-translate-x-1/2 flex items-center justify-center z-10">
                     <div className="h-10 w-10 md:h-12 md:w-12 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center shadow-md animate-pulse-slow">
                       <Icon className="h-4 w-4 md:h-5 md:w-5" />
                     </div>
                   </div>
 
-                  {/* Right Side Content for Odd indexes (or spacer) */}
+                  {}
                   <div className={`ml-14 md:ml-0 md:flex ${isEven ? 'md:order-last' : 'md:justify-start'}`}>
                     {isEven ? (
-                      /* If even, card is on the Right column */
                       <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -93,7 +92,7 @@ export default function Experience() {
                         </ul>
                       </motion.div>
                     ) : (
-                      /* If odd, display blank spacer on the right side */
+
                       <div className="hidden md:block w-full" />
                     )}
                   </div>
