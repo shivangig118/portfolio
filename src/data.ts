@@ -70,23 +70,33 @@ export const PROJECTS: Project[] = [
 
 export const SKILLS: SkillGroup[] = [
   {
+    id: 'languages',
     category: 'Languages',
-    skills: ['JavaScript', 'Python', 'Java']
+    description: 'Core languages for web, backend, and scripting.',
+    skills: ['JavaScript', 'Python', 'Java'],
   },
   {
+    id: 'frontend',
     category: 'Frontend',
-    skills: ['React', 'Next.js', 'Tailwind CSS']
+    description: 'Interfaces, routing, and design systems.',
+    skills: ['React', 'Next.js', 'Tailwind CSS'],
   },
   {
+    id: 'backend',
     category: 'Backend',
-    skills: ['Node.js', 'Express', 'Spring Boot']
+    description: 'APIs, services, and enterprise frameworks.',
+    skills: ['Node.js', 'Express', 'Spring Boot'],
   },
   {
+    id: 'databases',
     category: 'Databases',
-    skills: ['PostgreSQL', 'MongoDB']
+    description: 'Relational and document data stores.',
+    skills: ['PostgreSQL', 'MongoDB'],
   },
   {
+    id: 'ai-tools',
     category: 'AI / Tools',
-    skills: ['LangChain', 'Docker', 'Git']
-  }
+    description: 'LLM workflows, containers, and version control.',
+    skills: ['LangChain', 'Docker', 'Git'],
+  },
 ];
